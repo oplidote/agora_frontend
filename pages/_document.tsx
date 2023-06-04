@@ -1,3 +1,4 @@
+import { HeadMeta } from 'components/common';
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -29,7 +30,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <HeadMeta/>
+        </Head>
         <body>
           <Main />
           <NextScript />
