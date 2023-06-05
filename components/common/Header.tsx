@@ -20,6 +20,7 @@ const HeaderContainer = styled.div`
   left: 0;
   width: 100vw;
   height: 100px;
+  background-color: #fff;
   a {
     width: 118px;
   }

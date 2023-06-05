@@ -3,15 +3,14 @@ import type { NextPageWithLayout } from '../_app';
 import { AppLayout, HeaderLayout } from 'components/layout';
 import { Title } from 'components/common';
 import ProjectList from 'components/Project';
-import CreateButton from 'components/Button/CreateButton';
-import { useRouter } from 'next/router';
+import AddButton from 'components/Button/CreateButton';
+import CreateForm from 'components/create';
 
 const Page: NextPageWithLayout = () => {
   return (
     <>
-      <Title>회고록</Title>
-      <ProjectList />
-      <CreateButton />
+      <Title>회고 추가하기</Title>
+      <CreateForm />
     </>
   );
 };

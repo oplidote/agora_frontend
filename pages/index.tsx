@@ -12,15 +12,22 @@ const Page: NextPageWithLayout = () => {
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
-  const onLogin = () => {
-    axios.post(`${BACKEND_URL}/login`,{
-      identity: userId,
-      password: userPw
-    }).then((res)=> {
+  const onLogin = async() => {
+    try {
+      const res = await axios.post(`${BACKEND_URL}/login`,{
+        identity: userId,
+        password: userPw
+      })
       console.log(res);
-    }).catch((err)=> {
-      console.log(err);
-    })
+      if(res.data){
+        router.push({
+          pathname: `/${userId}`
+        })
+      }
+    }
+    catch {
+
+    }
   };
   return (
     <>
@@ -29,9 +36,9 @@ const Page: NextPageWithLayout = () => {
         <div className={userId ? 'on': ''}>
           <label htmlFor="id">
             {userId ? (
-              <img src="assets/img/user-profile-02.svg" alt="로그인아이디이미지" />
+              <img src="/assets/img/user-profile-02.svg" alt="로그인아이디이미지" />
             ) : (
-              <img src="assets/img/user-profile-01.svg" alt="로그인아이디이미지" />
+              <img src="/assets/img/user-profile-01.svg" alt="로그인아이디이미지" />
             )}
           </label>
           <input type="text" id="id" placeholder="아이디" value={userId} onChange={(e) => setUserId(e.target.value)} />
@@ -39,9 +46,9 @@ const Page: NextPageWithLayout = () => {
         <div className={userPw ? 'on': ''}>
           <label htmlFor="password">
             {userPw ? (
-              <img src="assets/img/lock-05.svg" alt="로그인비밀번호이미지" />
+              <img src="/assets/img/lock-05.svg" alt="로그인비밀번호이미지" />
             ) : (
-              <img src="assets/img/lock-04.svg" alt="로그인비밀번호이미지" />
+              <img src="/assets/img/lock-04.svg" alt="로그인비밀번호이미지" />
             )}
           </label>
           <input

@@ -1,11 +1,28 @@
+import DeleteModal from 'components/Modal/DeleteModal';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 const EditButton = () => {
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
   return (
     <ButtonWrapper>
-      <button>수정</button>
-      <button>삭제</button>
+      <button
+        onClick={() => {
+          setIsOpenEdit(true);
+        }}
+      >
+        수정
+      </button>
+      <button
+        onClick={() => {
+          setIsOpenDelete(true);
+        }}
+      >
+        삭제
+      </button>
+      {isOpenDelete ? <DeleteModal setIsOpenDelete={setIsOpenDelete}/> : ''}
+      
     </ButtonWrapper>
   );
 };

@@ -1,11 +1,15 @@
 import { Header } from 'components/common';
 import styled from 'styled-components';
 
-const HeaderLayout = (props: { children: React.ReactNode }) => {
+interface layoutPropsType {
+  children: React.ReactNode
+  bg: string
+}
+const HeaderLayout = ({children,bg}:layoutPropsType) => {
   return (
-    <Container>
+    <Container style={{backgroundColor: bg}}>
       <Header />
-      {props.children}
+      {children}
     </Container>
   );
 };
