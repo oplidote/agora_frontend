@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
+interface CreateFormPropsType {
+  project_id?: string;
+}
 
-const CreateForm = () => {
+const CreateForm = ({ project_id }: CreateFormPropsType) => {
   const [title, setTitle] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [type1, setType1] = useState<string>('');
@@ -11,36 +14,65 @@ const CreateForm = () => {
   const [type3, setType3] = useState<string>('');
   const router = useRouter();
   const { id } = router.query;
+  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
+
+  const getList = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/projects/${project_id}`);
+      console.log(res.data.projectDto.name);
+      setName(res.data.projectDto.name);
+      setTitle(res.data.projectDto.title);
+      setType1(res.data.projectDto.type1);
+      setType2(res.data.projectDto.type2);
+      setType3(res.data.projectDto.type3);
+    } catch {}
+  };
+
   // state의 변화를 감지하여 재연산
   const verification = useMemo(() => {
     return !!title && !!name && !!type1 && !!type2 && !!type3;
   }, [title, name, type1, type2, type3]);
-  const verification2 = useMemo(()=> {
-    
+  const verification2 = useMemo(() => {
     return type1 != type2 && type2 != type3 && type1 != type3;
-  },[type1,type2,type3])
+  }, [type1, type2, type3]);
   const onRegist = async () => {
     if (verification) {
-      if(verification2){
+      if (verification2) {
         try {
           const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
-          const res = await axios.post(`${BACKEND_URL}/${id}/projects`, {
-            name,
-            title,
-            type1,
-            type2,
-            type3,
-          });
+          if(project_id){
+            const res = await axios.put(`${BACKEND_URL}/projects/${project_id}`, {
+              name,
+              title,
+              type1,
+              type2,
+              type3,
+            });
+          }
+          else {
+            const res = await axios.post(`${BACKEND_URL}/${id}/projects`, {
+              name,
+              title,
+              type1,
+              type2,
+              type3,
+            });
+          }
           router.push({
             pathname: `/${id}`,
           });
         } catch {}
-      }
-      else {
-        alert('보드에 동일한 이름이 존재합니다.')
+      } else {
+        alert('보드에 동일한 이름이 존재합니다.');
       }
     }
   };
+
+  useEffect(() => {
+    if (project_id) {
+      getList();
+    }
+  }, []);
   return (
     <Form>
       <CreateTitle>
@@ -115,7 +147,7 @@ const CreateForm = () => {
       </CreateKeyword>
       <ButtonBox>
         <button
-          className="cancle"
+          className="cancel"
           onClick={() =>
             router.push({
               pathname: `/${id}`,
@@ -221,7 +253,7 @@ const ButtonBox = styled.div`
     padding: 13px 60px;
     border: 1px solid #6e8ab4;
     border-radius: 8px;
-    &.cancle {
+    &.cancel {
       color: #6e8ab4;
     }
     &.post {

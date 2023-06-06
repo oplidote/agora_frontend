@@ -1,23 +1,28 @@
 import AuthModal from 'components/Modal/AuthModal';
 import DeleteModal from 'components/Modal/DeleteModal';
+import { Router, useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
 interface EditButtonPropsType {
   project_id?: number;
   post_id?: number;
-  refreshHandler: (isRefresh:boolean) => void;
+  refreshHandler: (isRefresh: boolean) => void;
 }
-const EditButton = ({ refreshHandler,post_id,project_id }: EditButtonPropsType) => {
-  const [isOpenEdit, setIsOpenEdit] = useState(false);
+const EditButton = ({ refreshHandler, post_id, project_id }: EditButtonPropsType) => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isOpenAuth, setIsOpenAuth] = useState(false);
-
+  const router = useRouter();
+  const { id } = router.query;
   return (
     <ButtonWrapper>
       <button
         onClick={() => {
-          setIsOpenEdit(true);
+          if (project_id) {
+            router.push({
+              pathname: `${id}/${project_id}/edit`,
+            });
+          }
         }}
       >
         수정
@@ -30,7 +35,16 @@ const EditButton = ({ refreshHandler,post_id,project_id }: EditButtonPropsType) 
         삭제
       </button>
       {isOpenDelete ? <DeleteModal setIsOpenDelete={setIsOpenDelete} setIsOpenAuth={setIsOpenAuth} /> : ''}
-      {isOpenAuth ? <AuthModal refreshHandler={refreshHandler} post_id={post_id} project_id={project_id} setIsOpenAuth={setIsOpenAuth} /> : ''}
+      {isOpenAuth ? (
+        <AuthModal
+          refreshHandler={refreshHandler}
+          post_id={post_id}
+          project_id={project_id}
+          setIsOpenAuth={setIsOpenAuth}
+        />
+      ) : (
+        ''
+      )}
     </ButtonWrapper>
   );
 };

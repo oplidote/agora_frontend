@@ -9,26 +9,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import CreateModal from 'components/Modal/CreateModal';
 import CreatePostButton from 'components/Button/CreatePostButton';
-interface PostType {
-  id: number;
-  category: string;
-  writer: string;
-  content: string;
-  password: string;
-}
-interface DataType {
-  postDtos: PostType[];
-  projectDto: {
-    createDt: string;
-    id: number;
-    name: string;
-    title: string;
-    type1: string;
-    type2: string;
-    type3: string;
-    updateDt: string;
-  };
-}
+import { DataType } from 'types';
+
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
