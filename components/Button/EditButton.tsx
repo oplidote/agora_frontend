@@ -1,10 +1,18 @@
+import AuthModal from 'components/Modal/AuthModal';
 import DeleteModal from 'components/Modal/DeleteModal';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 
-const EditButton = () => {
+interface EditButtonPropsType {
+  project_id?: number;
+  post_id?: number;
+  refreshHandler: (isRefresh:boolean) => void;
+}
+const EditButton = ({ refreshHandler,post_id,project_id }: EditButtonPropsType) => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isOpenAuth, setIsOpenAuth] = useState(false);
+
   return (
     <ButtonWrapper>
       <button
@@ -21,8 +29,8 @@ const EditButton = () => {
       >
         삭제
       </button>
-      {isOpenDelete ? <DeleteModal setIsOpenDelete={setIsOpenDelete}/> : ''}
-      
+      {isOpenDelete ? <DeleteModal setIsOpenDelete={setIsOpenDelete} setIsOpenAuth={setIsOpenAuth} /> : ''}
+      {isOpenAuth ? <AuthModal refreshHandler={refreshHandler} post_id={post_id} project_id={project_id} setIsOpenAuth={setIsOpenAuth} /> : ''}
     </ButtonWrapper>
   );
 };

@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 type PropsType = {
   setIsOpenDelete: any;
+  setIsOpenAuth: any;
   type?: number | undefined;
 };
 
-const DeleteModal = ({ setIsOpenDelete, type }: PropsType) => {
+const DeleteModal = ({ setIsOpenAuth,setIsOpenDelete, type }: PropsType) => {
   const text = ['삭제하시겠습니까?', '포스트잇을 삭제하시겠습니까?'];
   return (
     <ModalContainer>
@@ -24,7 +25,7 @@ const DeleteModal = ({ setIsOpenDelete, type }: PropsType) => {
           >
             아니오
           </button>
-          <button>네</button>
+          <button onClick={()=> {setIsOpenAuth(true); setIsOpenDelete(false)}}>네</button>
         </div>
       </Content>
     </ModalContainer>

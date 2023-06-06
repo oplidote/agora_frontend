@@ -1,16 +1,17 @@
 import CreateModal from 'components/Modal/CreateModal';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState,Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
-const CreateButton = () => {
+interface CreatePostButtonPropsType {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
+const CreatePostButton = ({setIsOpen}:CreatePostButtonPropsType) => {
   const router = useRouter();
 
   const { id } = router.query;
   const onClick = () => {
-    router.push({
-      pathname: `${id}/create`,
-    });
+    setIsOpen(true);
   };
   return (
     <>
@@ -23,11 +24,11 @@ const CreateButton = () => {
 
 const Button = styled.button`
   position: fixed;
-  bottom: 14.84%;
+  bottom: 5.47%;
   right: 5.56%;
   width: 56px;
   height: 56px;
   box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.2);
   border-radius: 16px;
 `;
-export default CreateButton;
+export default CreatePostButton;

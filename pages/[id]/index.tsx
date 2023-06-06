@@ -1,17 +1,16 @@
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from '../_app';
-import { AppLayout, HeaderLayout } from 'components/layout';
+import { HeaderLayout } from 'components/layout';
 import { Title } from 'components/common';
 import ProjectList from 'components/Project';
 import CreateButton from 'components/Button/CreateButton';
-import { useRouter } from 'next/router';
 
 const Page: NextPageWithLayout = () => {
   return (
     <>
       <Title>회고록</Title>
       <ProjectList />
-      <CreateButton />
+      <CreateButton/>
     </>
   );
 };

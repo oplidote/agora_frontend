@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface layoutPropsType {
   children: React.ReactNode
-  bg: string
+  bg?: string
 }
 const HeaderLayout = ({children,bg}:layoutPropsType) => {
   return (

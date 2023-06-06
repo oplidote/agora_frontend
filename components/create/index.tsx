@@ -11,7 +11,6 @@ const CreateForm = () => {
   const [type3, setType3] = useState<string>('');
   const router = useRouter();
   const { id } = router.query;
-
   // state의 변화를 감지하여 재연산
   const verification = useMemo(() => {
     return !!title && !!name && !!type1 && !!type2 && !!type3;
@@ -21,7 +20,7 @@ const CreateForm = () => {
     if (verification) {
       try {
         const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
-        const res = await axios.post(`${BACKEND_URL}/123/projects`, {
+        const res = await axios.post(`${BACKEND_URL}/${id}/projects`, {
           name,
           title,
           type1,
@@ -29,8 +28,8 @@ const CreateForm = () => {
           type3,
         });
         router.push({
-          pathname:'/test'
-        })
+          pathname: `/${id}`,
+        });
       } catch {}
     }
   };
@@ -107,7 +106,16 @@ const CreateForm = () => {
         </section>
       </CreateKeyword>
       <ButtonBox>
-        <button className="cancle">취소</button>
+        <button
+          className="cancle"
+          onClick={() =>
+            router.push({
+              pathname: `/${id}`,
+            })
+          }
+        >
+          취소
+        </button>
         <button className={`post ${verification && 'on'}`} onClick={onRegist}>
           등록
         </button>

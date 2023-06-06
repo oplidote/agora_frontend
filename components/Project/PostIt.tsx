@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 interface postItPropsType {
-  id: number;
+  post_id: number;
   writter: string;
   content: string;
   board_type: number;
 }
-const PostIt = ({ id, writter, content, board_type }: postItPropsType) => {
+const PostIt = ({ post_id, writter, content, board_type }: postItPropsType) => {
   const dropMenuRef = useRef<HTMLButtonElement | null>(null);
   const [isDropMenuOpen, setDropMenuOpen] = useState<boolean>(false);
 
@@ -29,7 +29,7 @@ const PostIt = ({ id, writter, content, board_type }: postItPropsType) => {
         <button onClick={() => setDropMenuOpen(true)} ref={dropMenuRef}>
           <img src="/assets/img/dote3.svg" alt="도트이미지" />
         </button>
-        {isDropMenuOpen ? <EditButton /> : ''}
+        {isDropMenuOpen ? <EditButton refreshHandler={refreshHandler} post_id={post_id}/> : ''}
       </div>
       <p>{content}</p>
     </Box>
