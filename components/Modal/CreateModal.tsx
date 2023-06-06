@@ -7,9 +7,9 @@ import styled from 'styled-components';
 interface CreateModalPropsType {
   setIsOpen: any;
   type_list: string[];
-  setRefesh: any;
+  refreshHandler: (isRefresh:boolean) => void;
 }
-const CreateModal = ({ setRefesh,setIsOpen, type_list }: CreateModalPropsType) => {
+const CreateModal = ({ refreshHandler,setIsOpen, type_list }: CreateModalPropsType) => {
   const router = useRouter();
   const { project_id } = router.query;
   const [isDown, setIsDown] = useState(false);
@@ -27,7 +27,7 @@ const CreateModal = ({ setRefesh,setIsOpen, type_list }: CreateModalPropsType) =
         content,
         password,
       });
-      setRefesh(true);
+      refreshHandler(true);
       setIsOpen(false);
     } catch {}
   };

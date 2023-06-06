@@ -32,10 +32,15 @@ interface DataType {
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [refresh, setRefesh] = useState(false);
   const { id } = router.query;
   const { project_id } = router.query;
   const [projectData, setProjectData] = useState<DataType | null>(null);
+  const [refresh, setRefresh] = useState(false);
+
+  const refreshHandler = (isRefresh: boolean) => {
+    setRefresh(isRefresh);
+  };
+
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
   const getList = async () => {
@@ -49,16 +54,16 @@ const Page: NextPageWithLayout = () => {
   const board3 = projectData?.postDtos.filter((it) => it.category.includes(projectData.projectDto.type3));
   const board_JSX = useCallback((board: any, num: number) => {
     const frame = board.map((item: any, i: number) => {
-      return <PostIt post_id={item.id} writter={item.writer} content={item.content} board_type={num} />;
+      return <PostIt refreshHandler={refreshHandler} post_id={item.id} writter={item.writer} content={item.content} board_type={num} />;
     });
     return frame;
   }, []);
   useEffect(() => {
-    setRefesh(false);
+    refreshHandler(false);
     if (project_id) {
       getList();
     }
-  }, [project_id,refresh]);
+  }, [project_id, refresh]);
   return (
     <>
       {projectData && (
@@ -95,7 +100,7 @@ const Page: NextPageWithLayout = () => {
             <CreateModal
               setIsOpen={setIsOpen}
               type_list={[projectData.projectDto.type1, projectData.projectDto.type2, projectData.projectDto.type3]}
-              setRefesh={setRefesh}
+              refreshHandler={refreshHandler}
             />
           ) : (
             ''

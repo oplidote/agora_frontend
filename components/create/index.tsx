@@ -15,22 +15,30 @@ const CreateForm = () => {
   const verification = useMemo(() => {
     return !!title && !!name && !!type1 && !!type2 && !!type3;
   }, [title, name, type1, type2, type3]);
-
+  const verification2 = useMemo(()=> {
+    
+    return type1 != type2 && type2 != type3 && type1 != type3;
+  },[type1,type2,type3])
   const onRegist = async () => {
     if (verification) {
-      try {
-        const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
-        const res = await axios.post(`${BACKEND_URL}/${id}/projects`, {
-          name,
-          title,
-          type1,
-          type2,
-          type3,
-        });
-        router.push({
-          pathname: `/${id}`,
-        });
-      } catch {}
+      if(verification2){
+        try {
+          const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
+          const res = await axios.post(`${BACKEND_URL}/${id}/projects`, {
+            name,
+            title,
+            type1,
+            type2,
+            type3,
+          });
+          router.push({
+            pathname: `/${id}`,
+          });
+        } catch {}
+      }
+      else {
+        alert('보드에 동일한 이름이 존재합니다.')
+      }
     }
   };
   return (

@@ -7,8 +7,9 @@ interface postItPropsType {
   writter: string;
   content: string;
   board_type: number;
+  refreshHandler: (isRefresh:boolean) => void;
 }
-const PostIt = ({ post_id, writter, content, board_type }: postItPropsType) => {
+const PostIt = ({ refreshHandler,post_id, writter, content, board_type }: postItPropsType) => {
   const dropMenuRef = useRef<HTMLButtonElement | null>(null);
   const [isDropMenuOpen, setDropMenuOpen] = useState<boolean>(false);
 
