@@ -1,7 +1,15 @@
+import Router, { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 const LogOutButton = () => {
-  return <Button>로그아웃</Button>;
+  const router = useRouter();
+
+  const onClick = () => {
+    router.push({
+      pathname:'/',
+    })
+  }
+  return <Button onClick={onClick} >로그아웃</Button>;
 };
 const Button = styled.button`
   font-weight: 600;

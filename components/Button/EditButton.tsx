@@ -1,7 +1,7 @@
 import AuthModal from 'components/Modal/AuthModal';
 import DeleteModal from 'components/Modal/DeleteModal';
-import { Router, useRouter } from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 interface EditButtonPropsType {
@@ -15,7 +15,7 @@ const EditButton = ({ refreshHandler, post_id, project_id }: EditButtonPropsType
   const router = useRouter();
   const { id } = router.query;
   return (
-    <ButtonWrapper>
+    <ButtonWrapper className={post_id ? 'post': ''}>
       <button
         onClick={() => {
           if (project_id) {
@@ -55,6 +55,9 @@ const ButtonWrapper = styled.div`
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
+  &.post {
+    left: 100%;
+  }
   button {
     position: relative;
     display: block;
